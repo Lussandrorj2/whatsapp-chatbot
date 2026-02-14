@@ -3,6 +3,7 @@ import requests
 import os
 from dotenv import load_dotenv
 from llm import ask_llm
+from fastapi.responses import PlainTextResponse
 
 load_dotenv()
 
@@ -14,10 +15,16 @@ PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
 
 
 @app.get("/webhook")
-async def verify_webhook(mode: str = None, verify_token: str = None, challenge: str = None):
-    if mode == "subscribe" and verify_token == VERIFY_TOKEN:
-        return int(challenge)
+async def verify_webhook(request: Request):
+    mode = request.query_params.get("hub.mode")
+    token = request.query_params.get("hub.verify_token")
+    challenge = request.query_params.get("hub.challenge")
+
+    if mode == "subscribe" and token == VERIFY_TOKEN:
+        return PlainTextResponse(challenge)
+
     return {"error": "Verification failed"}
+
 
 
 @app.post("/webhook")
