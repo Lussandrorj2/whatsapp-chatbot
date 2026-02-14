@@ -66,4 +66,5 @@ def send_whatsapp_message(to, message):
 
 @app.get("/test")
 def test():
-    return {"resposta": ask_gemini("Explique IA em 1 linha")}
+    return {"resposta": ask_llm("Explique IA em 1 linha")}
+
