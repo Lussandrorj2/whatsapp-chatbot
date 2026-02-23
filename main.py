@@ -62,9 +62,4 @@ def send_whatsapp_message(to, message):
 
     requests.post(url, headers=headers, json=data)
 
-#rota temporaria 
-
-@app.get("/test")
-def test():
-    return {"resposta": ask_llm("Explique IA em 1 linha")}
 
