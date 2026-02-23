@@ -21,9 +21,9 @@ async def verify_webhook(request: Request):
     challenge = request.query_params.get("hub.challenge")
 
     if mode == "subscribe" and token == VERIFY_TOKEN:
-        return PlainTextResponse(challenge)
+        return PlainTextResponse(challenge, status_code=200)
 
-    return {"error": "Verification failed"}
+    return PlainTextResponse("Verification failed", status_code=403)
 
 
 
