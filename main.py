@@ -60,6 +60,9 @@ def send_whatsapp_message(to, message):
         "text": {"body": message},
     }
 
-    requests.post(url, headers=headers, json=data)
+    response = requests.post(url, headers=headers, json=data)
+
+    print("Status envio:", response.status_code)
+    print("Resposta Meta:", response.text)
 
 
