@@ -18,4 +18,4 @@ def ask_llm(text: str):
 
     except Exception as e:
         print("Erro Gemini:", e)
-        return "Erro interno no processamento."
+        return "No momento estou com limite temporário de requisições. Tente novamente mais tarde."
