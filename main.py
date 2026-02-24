@@ -74,4 +74,6 @@ def send_whatsapp_message(to, message):
     print("Status envio:", response.status_code)
     print("Resposta Meta:", response.text)
 
-
+@app.get("/")
+def health():
+    return {"status": "running"}
