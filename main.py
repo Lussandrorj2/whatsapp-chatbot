@@ -32,12 +32,21 @@ async def receive_message(request: Request):
     data = await request.json()
 
     try:
-        message = data["entry"][0]["changes"][0]["value"]["messages"][0]["text"]["body"]
-        sender = data["entry"][0]["changes"][0]["value"]["messages"][0]["from"]
+        value = data["entry"][0]["changes"][0]["value"]
 
-        ai_response = ask_llm(message)
+        # Só processa se realmente for mensagem recebida
+        if "messages" in value:
+            message_data = value["messages"][0]
 
-        send_whatsapp_message(sender, ai_response)
+            if message_data["type"] == "text":
+                message = message_data["text"]["body"]
+                sender = message_data["from"]
+
+                ai_response = ask_llm(message)
+                send_whatsapp_message(sender, ai_response)
+
+        else:
+            print("Evento sem mensagem (status update)")
 
     except Exception as e:
         print("Erro:", e)
